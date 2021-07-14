@@ -31,10 +31,17 @@ function Main({ name }) {
     console.log(newProductItems);
   }
 
+  //here we say: clickedproduct (because later, handleclickproduct is beeing passed into the onclick props), is not equal to
+  function handleClickProduct(clickedProduct) {
+    const newProducts = state.filter(
+      (gefilterteProdukte) => gefilterteProdukte !== clickedProduct
+    );
+    setState(newProducts);
+  }
   function renderProducts() {
     //state is here the new state and we are getting the date (single product), through mapping. we return the component "Product" we created and pass it the prop name and the vale.
     const listItems = state.map((singleProduct) => {
-      return <Product name={singleProduct} />;
+      return <Product name={singleProduct} onClick={handleClickProduct} />;
     });
     return listItems;
   }
