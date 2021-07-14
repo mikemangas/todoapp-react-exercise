@@ -9,3 +9,15 @@
 .App {
   text-align: center;
 }
+
+.headerInput {
+  padding: 10px;
+}
+
+.headerButton {
+  padding: 10px;
+}
+
+.headerForm {
+  margin-top: 20px;
+}
