@@ -1,5 +1,6 @@
 import "./App.css";
 import { useState } from "react";
+import Product from "./product";
 
 export default function App() {
   return (
@@ -57,9 +58,4 @@ function Main({ name }) {
       <ul>{renderProducts()}</ul>
     </div>
   );
-}
-
-//product component
-function Product({ name }) {
-  return <li>{name}</li>;
 }
