@@ -17,10 +17,11 @@ function Main({ name }) {
 
   //here we say: clickedproduct (because later, handleclickproduct is beeing passed into the onclick props), is not equal to
   function handleClickProduct(clickedProduct) {
-    const newProducts = state.filter((gefilterteProdukte) => {
-      return gefilterteProdukte.name !== clickedProduct;
+    const newProducts = state.filter((produktObject) => {
+      return produktObject.name !== clickedProduct;
     });
     setState(newProducts);
+    console.log(newProducts);
   }
 
   //event onsbumit and get the value of the form.
