@@ -10,89 +10,44 @@ export default function App() {
   );
 }
 
-// main app component
-
-function Main({ name }) {
+function Main() {
   const [state, setState] = useState([]);
 
-  //here we say: clickedproduct (because later, handleclickproduct is beeing passed into the onclick props), is not equal to
-  function handleClickProduct(clickedProduct) {
-    const newProducts = state.filter((produktObject) => {
-      return produktObject.name !== clickedProduct;
-    });
-    setState(newProducts);
-    console.log(newProducts);
-  }
+  function getProducts() {}
 
-  //event onsbumit and get the value of the form.
-  function handleAddGrocerySubmit(event) {
+  function productObject(event) {
     event.preventDefault();
-    //that event target works because, handlegrocerysubmit function is beeing called in the form.
     const form = event.target;
-    const formInput = form.shoppingForm;
-    const inputValue = formInput.value;
+    const formInput = form.input;
+    const formInputValue = formInput.value;
 
-    //concatenate through spread.. the state (which is empty at first, and then then gets the previous status) and the inputvalue - as an array.
-    const newProductItems = [
-      ...state,
+    const productObject = [
       {
-        name: inputValue,
+        ...state,
+        productName: formInputValue,
         isBought: false,
       },
     ];
-
-    //set to new state the productitem.
-    setState(newProductItems);
-    form.reset();
+    console.log(productObject);
+    setState(productObject);
   }
 
-  function handleClickIsBought(productName) {
-    const newProductsIsBought = state.map((productObject) => {
-      if (productObject.name === productName) {
-        return {
-          ...productObject,
-          isBought: !productObject.isBought,
-        };
-      }
-      return productObject;
-    });
-
-    setState(newProductsIsBought);
-    console.log(newProductsIsBought);
+  function renderShoppingItems() {
+    return (
+      <>
+        <h1>Shopping List</h1>
+        <form onSubmit={productObject}>
+          <input
+            name="input"
+            id="input"
+            type="text"
+            placeholder="type an item"
+          ></input>
+          <button type="submit">Add an Item</button>
+        </form>
+        <ul>{Product}</ul>
+      </>
+    );
   }
-
-  function renderProducts() {
-    //state is here the new state and we are getting the date (single product), through mapping. we return the component "Product" we created and pass it the prop name and the vale.
-    const listItems = state.map((singleProduct, index) => {
-      return (
-        <Product
-          key={index}
-          product={singleProduct}
-          onClickItem={handleClickProduct}
-          onClickIsBought={handleClickIsBought}
-        />
-      );
-    });
-    return listItems;
-  }
-  let headerTitleH1 = "Your Shopping List";
-  return (
-    <div>
-      <h1>{headerTitleH1}</h1>
-      <form onSubmit={handleAddGrocerySubmit} className="headerForm">
-        <input
-          className="headerInput"
-          name="shoppingForm"
-          id="shoppingForm"
-          type="text"
-          required
-          placeholder="type in your grocery"
-        ></input>
-        <button className="headerButton" type="submit">
-          Add a Grocery
-        </button>
-      </form>
-      <ul>{renderProducts()}</ul>
-    </div>
-  );
+  return renderShoppingItems();
 }
