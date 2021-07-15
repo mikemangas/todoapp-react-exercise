@@ -13,8 +13,6 @@ export default function App() {
 function Main() {
   const [state, setState] = useState([]);
 
-  function getProducts() {}
-
   function productObject(event) {
     event.preventDefault();
     const form = event.target;
@@ -28,26 +26,29 @@ function Main() {
         isBought: false,
       },
     ];
-    console.log(productObject);
     setState(productObject);
   }
 
-  function renderShoppingItems() {
-    return (
-      <>
-        <h1>Shopping List</h1>
-        <form onSubmit={productObject}>
-          <input
-            name="input"
-            id="input"
-            type="text"
-            placeholder="type an item"
-          ></input>
-          <button type="submit">Add an Item</button>
-        </form>
-        <ul>{Product}</ul>
-      </>
-    );
+  function renderObjects() {
+    const listItems = state.map((newProduct) => (
+      <Product product={newProduct} />
+    ));
+    return listItems;
   }
-  return renderShoppingItems();
+
+  return (
+    <>
+      <h1>Shopping List</h1>
+      <form onSubmit={productObject}>
+        <input
+          name="input"
+          id="input"
+          type="text"
+          placeholder="type an item"
+        ></input>
+        <button type="submit">Add an Item</button>
+      </form>
+      <ul>{renderObjects}</ul>
+    </>
+  );
 }
