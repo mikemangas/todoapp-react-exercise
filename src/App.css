@@ -21,3 +21,17 @@
 .headerForm {
   margin-top: 20px;
 }
+
+.listClass--itemRed {
+  color: red;
+}
+
+.listClass {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  align-items: center;
+}
+
+.listClass * {
+  margin: 10px;
+}
