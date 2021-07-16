@@ -1,6 +1,5 @@
 import "./App.css";
 import { useState } from "react";
-import Product from "./product";
 
 export default function App() {
   return (
@@ -11,43 +10,34 @@ export default function App() {
 }
 
 function Main() {
-  const [state, setState] = useState([]);
-
-  function getProducts() {}
-
+  const [state, setState] = useState([""]);
   function productObject(event) {
     event.preventDefault();
     const form = event.target;
     const formInput = form.input;
     const formInputValue = formInput.value;
-
-    const productObject = [
-      {
-        ...state,
-        productName: formInputValue,
-        isBought: false,
-      },
-    ];
-    console.log(productObject);
-    setState(productObject);
+    const addedProduct = [...state, formInputValue];
+    setState(addedProduct);
+    form.reset();
   }
 
-  function renderShoppingItems() {
-    return (
-      <>
-        <h1>Shopping List</h1>
-        <form onSubmit={productObject}>
-          <input
-            name="input"
-            id="input"
-            type="text"
-            placeholder="type an item"
-          ></input>
-          <button type="submit">Add an Item</button>
-        </form>
-        <ul>{Product}</ul>
-      </>
-    );
-  }
-  return renderShoppingItems();
+  const blabliblu = state.map((newItem) => {
+    return <li>{newItem}</li>;
+  });
+
+  return (
+    <>
+      <h1>Shopping List</h1>
+      <form onSubmit={productObject}>
+        <input
+          name="input"
+          id="input"
+          type="text"
+          placeholder="type an item"
+        ></input>
+        <button type="submit">Add an Item</button>
+      </form>
+      <ul>{blabliblu}</ul>
+    </>
+  );
 }
