@@ -11,6 +11,7 @@ export default function App() {
 
 function Main() {
   const [state, setState] = useState([]);
+
   function productObject(event) {
     event.preventDefault();
     const form = event.target;
@@ -20,21 +21,34 @@ function Main() {
     setState(addedProduct);
     form.reset();
   }
-  function handleClickProduct(clickedProductName) {
-    console.log(clickedProductName);
+
+  function removeProduct(clickedProductName) {
     const removeName = state.filter(
       (removeItem) => removeItem.Name !== clickedProductName
     );
     setState(removeName);
     return removeName;
   }
+
+  function changeStatus(clickedProduct) {
+    const changeBoolean = state.map((product) => {
+      if (product.Name === clickedProduct) {
+        return {
+          ...product,
+          gekauft: !product.gekauft,
+        };
+      }
+      return product;
+    });
+    setState(changeBoolean);
+    console.log(changeBoolean);
+  }
+
   const renderObject = state.map((newItem) => {
     return (
       <>
-        <button>Whatsapp?</button>
-        <li onClick={() => handleClickProduct(newItem.Name)}>
-          {[newItem.Name]}
-        </li>
+        <button onClick={() => changeStatus(newItem.Name)}>Whatsapp?</button>
+        <li onClick={() => removeProduct(newItem.Name)}>{[newItem.Name]}</li>
       </>
     );
   });
