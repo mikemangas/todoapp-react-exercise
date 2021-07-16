@@ -20,16 +20,24 @@ function Main() {
     setState(addedProduct);
     form.reset();
   }
-
-  const blablibluName = state.map((newItem) => {
+  function handleClickProduct(clickedProductName) {
+    console.log(clickedProductName);
+    const removeName = state.filter(
+      (removeItem) => removeItem.Name !== clickedProductName
+    );
+    setState(removeName);
+    return removeName;
+  }
+  const renderObject = state.map((newItem) => {
     return (
       <>
         <button>Whatsapp?</button>
-        <li>{[newItem.Name]}</li>
+        <li onClick={() => handleClickProduct(newItem.Name)}>
+          {[newItem.Name]}
+        </li>
       </>
     );
   });
-  console.log(blablibluName);
 
   return (
     <>
@@ -44,7 +52,7 @@ function Main() {
         ></input>
         <button type="submit">Add an Item</button>
       </form>
-      <ul>{blablibluName}</ul>
+      <ul>{renderObject}</ul>
     </>
   );
 }
