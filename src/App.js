@@ -17,7 +17,10 @@ function Main() {
     const form = event.target;
     const formInput = form.input;
     const formInputValue = formInput.value;
-    const addedProduct = [...state, { Name: formInputValue, gekauft: false }];
+    const addedProduct = [
+      ...state,
+      { Name: formInputValue, gekauft: false, id: 0 },
+    ];
     setState(addedProduct);
     form.reset();
   }
@@ -30,9 +33,9 @@ function Main() {
     return removeName;
   }
 
-  function changeStatus(clickedProduct) {
+  function changeStatus(clickedProductButton) {
     const changeBoolean = state.map((product) => {
-      if (product.Name === clickedProduct) {
+      if (product.Name === clickedProductButton) {
         return {
           ...product,
           gekauft: !product.gekauft,
@@ -41,7 +44,6 @@ function Main() {
       return product;
     });
     setState(changeBoolean);
-    console.log(changeBoolean);
   }
 
   const renderObject = state.map((newItem) => {
