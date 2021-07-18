@@ -1,12 +1,45 @@
 import "./App.css";
 import { useState } from "react";
-import Product from "./product";
 
 export default function App() {
   return (
     <div className="App">
       <Main />
     </div>
+  );
+}
+
+function Pagetitle({ h1text }) {
+  return <h1>todoApp powered by {h1text}</h1>;
+}
+
+//product component
+function Product({ product, onClickItem, onClickIsBought }) {
+  function handleButtonClick(event) {
+    event.stopPropagation();
+    onClickIsBought(product.name);
+  }
+
+  function handleClick() {
+    onClickItem(product.name);
+  }
+
+  let boughtText;
+  let shoppingListItemClass;
+
+  if (product.isBought) {
+    shoppingListItemClass = "listClass--itemRed";
+    boughtText = "Bought";
+  } else {
+    boughtText = "Buy";
+  }
+
+  return (
+    <li className={`listClass ${shoppingListItemClass}`}>
+      <p onClick={handleClick}>X</p>
+      {product.name}
+      <button onClick={handleButtonClick}>{boughtText}</button>
+    </li>
   );
 }
 
@@ -22,28 +55,6 @@ function Main({ name }) {
     });
     setState(newProducts);
     console.log(newProducts);
-  }
-
-  //event onsbumit and get the value of the form.
-  function handleAddGrocerySubmit(event) {
-    event.preventDefault();
-    //that event target works because, handlegrocerysubmit function is beeing called in the form.
-    const form = event.target;
-    const formInput = form.shoppingForm;
-    const inputValue = formInput.value;
-
-    //concatenate through spread.. the state (which is empty at first, and then then gets the previous status) and the inputvalue - as an array.
-    const newProductItems = [
-      ...state,
-      {
-        name: inputValue,
-        isBought: false,
-      },
-    ];
-
-    //set to new state the productitem.
-    setState(newProductItems);
-    form.reset();
   }
 
   function handleClickIsBought(productName) {
@@ -75,23 +86,62 @@ function Main({ name }) {
     });
     return listItems;
   }
-  let headerTitleH1 = "Your Shopping List";
+  function Inputform({ className }) {
+    return (
+      <input
+        className={className}
+        name="shoppingForm"
+        id="shoppingForm"
+        type="text"
+        required
+        placeholder="type in your grocery"
+      ></input>
+    );
+  }
+
+  function Button({ className, buttonText }) {
+    return (
+      <button className={className} type="submit">
+        {buttonText}
+      </button>
+    );
+  }
+
+  //event onsbumit and get the value of the form.
+  function handleAddGrocerySubmit(event) {
+    event.preventDefault();
+    //that event target works because, handlegrocerysubmit function is beeing called in the form.
+    const form = event.target;
+    const formInput = form.shoppingForm;
+    const inputValue = formInput.value;
+
+    //concatenate through spread.. the state (which is empty at first, and then then gets the previous status) and the inputvalue - as an array.
+    const newProductItems = [
+      ...state,
+      {
+        name: inputValue,
+        isBought: false,
+      },
+    ];
+
+    //set to new state the productitem.
+    setState(newProductItems);
+    form.reset();
+  }
+
+  function Form() {
+    return (
+      <form onSubmit={handleAddGrocerySubmit} className="headerForm">
+        <Inputform className={"new-class-item"} />
+        <Button className={"power"} buttonText={"click mich doch"} />
+      </form>
+    );
+  }
+
   return (
     <div>
-      <h1>{headerTitleH1}</h1>
-      <form onSubmit={handleAddGrocerySubmit} className="headerForm">
-        <input
-          className="headerInput"
-          name="shoppingForm"
-          id="shoppingForm"
-          type="text"
-          required
-          placeholder="type in your grocery"
-        ></input>
-        <button className="headerButton" type="submit">
-          Add a Grocery
-        </button>
-      </form>
+      <Pagetitle h1text={"Mike"} />
+      <Form />
       <ul>{renderProducts()}</ul>
     </div>
   );
